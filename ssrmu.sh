@@ -175,7 +175,7 @@ Get_User_transfer(){
 	#echo "transfer_enable_Used_2_1=${transfer_enable_Used_2_1}"
 	transfer_enable_Used_1=$(echo $((${transfer_enable_1}-${transfer_enable_Used_2_1})))
 	#echo "transfer_enable_Used_1=${transfer_enable_Used_1}"
-	
+
 	if [[ ${transfer_enable_1} -lt 1024 ]]; then
 		transfer_enable="${transfer_enable_1} B"
 	elif [[ ${transfer_enable_1} -lt 1048576 ]]; then
@@ -405,31 +405,31 @@ Set_config_password(){
 }
 Set_config_method(){
 	echo -e "请选择要设置的用户 加密方式
-	
+
  ${Green_font_prefix} 1.${Font_color_suffix} none
  ${Tip} 如果使用 auth_chain_* 系列协议，建议加密方式选择 none (该系列协议自带 RC4 加密)，混淆随意
- 
+
  ${Green_font_prefix} 2.${Font_color_suffix} rc4
  ${Green_font_prefix} 3.${Font_color_suffix} rc4-md5
  ${Green_font_prefix} 4.${Font_color_suffix} rc4-md5-6
- 
+
  ${Green_font_prefix} 5.${Font_color_suffix} aes-128-ctr
  ${Green_font_prefix} 6.${Font_color_suffix} aes-192-ctr
  ${Green_font_prefix} 7.${Font_color_suffix} aes-256-ctr
- 
+
  ${Green_font_prefix} 8.${Font_color_suffix} aes-128-cfb
  ${Green_font_prefix} 9.${Font_color_suffix} aes-192-cfb
  ${Green_font_prefix}10.${Font_color_suffix} aes-256-cfb
- 
+
  ${Green_font_prefix}11.${Font_color_suffix} aes-128-cfb8
  ${Green_font_prefix}12.${Font_color_suffix} aes-192-cfb8
  ${Green_font_prefix}13.${Font_color_suffix} aes-256-cfb8
- 
+
  ${Green_font_prefix}14.${Font_color_suffix} salsa20
  ${Green_font_prefix}15.${Font_color_suffix} chacha20
  ${Green_font_prefix}16.${Font_color_suffix} chacha20-ietf
  ${Tip} salsa20/chacha20-*系列加密方式，需要额外安装依赖 libsodium ，否则会无法启动ShadowsocksR !" && echo
-	read -e -p "(默认: 5. aes-128-ctr):" ssr_method
+	read -e -p "(默认: 1.none):" ssr_method
 	[[ -z "${ssr_method}" ]] && ssr_method="5"
 	if [[ ${ssr_method} == "1" ]]; then
 		ssr_method="none"
@@ -464,13 +464,13 @@ Set_config_method(){
 	elif [[ ${ssr_method} == "16" ]]; then
 		ssr_method="chacha20-ietf"
 	else
-		ssr_method="aes-128-ctr"
+		ssr_method="none"
 	fi
 	echo && echo ${Separator_1} && echo -e "	加密 : ${Green_font_prefix}${ssr_method}${Font_color_suffix}" && echo ${Separator_1} && echo
 }
 Set_config_protocol(){
 	echo -e "请选择要设置的用户 协议插件
-	
+
  ${Green_font_prefix}1.${Font_color_suffix} origin
  ${Green_font_prefix}2.${Font_color_suffix} auth_sha1_v4
  ${Green_font_prefix}3.${Font_color_suffix} auth_aes128_md5
@@ -478,7 +478,7 @@ Set_config_protocol(){
  ${Green_font_prefix}5.${Font_color_suffix} auth_chain_a
  ${Green_font_prefix}6.${Font_color_suffix} auth_chain_b
  ${Tip} 如果使用 auth_chain_* 系列协议，建议加密方式选择 none (该系列协议自带 RC4 加密)，混淆随意" && echo
-	read -e -p "(默认: 3. auth_aes128_md5):" ssr_protocol
+	read -e -p "(默认: 1.none):" ssr_protocol
 	[[ -z "${ssr_protocol}" ]] && ssr_protocol="3"
 	if [[ ${ssr_protocol} == "1" ]]; then
 		ssr_protocol="origin"
@@ -493,7 +493,7 @@ Set_config_protocol(){
 	elif [[ ${ssr_protocol} == "6" ]]; then
 		ssr_protocol="auth_chain_b"
 	else
-		ssr_protocol="auth_aes128_md5"
+		ssr_protocol="none"
 	fi
 	echo && echo ${Separator_1} && echo -e "	协议 : ${Green_font_prefix}${ssr_protocol}${Font_color_suffix}" && echo ${Separator_1} && echo
 	if [[ ${ssr_protocol} != "origin" ]]; then
@@ -507,7 +507,7 @@ Set_config_protocol(){
 }
 Set_config_obfs(){
 	echo -e "请选择要设置的用户 混淆插件
-	
+
  ${Green_font_prefix}1.${Font_color_suffix} plain
  ${Green_font_prefix}2.${Font_color_suffix} http_simple
  ${Green_font_prefix}3.${Font_color_suffix} http_post
@@ -905,7 +905,7 @@ JQ_install(){
 		fi
 		[[ ! -e ${jq_file} ]] && echo -e "${Error} JQ解析器 重命名失败，请检查 !" && exit 1
 		chmod +x ${jq_file}
-		echo -e "${Info} JQ解析器 安装完成，继续..." 
+		echo -e "${Info} JQ解析器 安装完成，继续..."
 	else
 		echo -e "${Info} JQ解析器 已安装，继续..."
 	fi
@@ -1175,7 +1175,7 @@ Modify_Config(){
  ${Green_font_prefix}12.${Font_color_suffix} 修改 全部配置
 ————— 其他 —————
  ${Green_font_prefix}13.${Font_color_suffix} 修改 用户配置中显示的IP或域名
- 
+
  ${Tip} 用户的用户名和端口是无法修改，如果需要修改请使用脚本的 手动修改功能 !" && echo
 	read -e -p "(默认: 取消):" ssr_modify
 	[[ -z "${ssr_modify}" ]] && echo "已取消..." && exit 1
@@ -1465,7 +1465,7 @@ Configure_Server_Speeder(){
  ${Green_font_prefix}4.${Font_color_suffix} 停止 锐速
  ${Green_font_prefix}5.${Font_color_suffix} 重启 锐速
  ${Green_font_prefix}6.${Font_color_suffix} 查看 锐速 状态
- 
+
  注意： 锐速和LotServer不能同时安装/启动！" && echo
 	read -e -p "(默认: 取消):" server_speeder_num
 	[[ -z "${server_speeder_num}" ]] && echo "已取消..." && exit 1
@@ -1529,7 +1529,7 @@ Configure_LotServer(){
  ${Green_font_prefix}4.${Font_color_suffix} 停止 LotServer
  ${Green_font_prefix}5.${Font_color_suffix} 重启 LotServer
  ${Green_font_prefix}6.${Font_color_suffix} 查看 LotServer 状态
- 
+
  注意： 锐速和LotServer不能同时安装/启动！" && echo
 	read -e -p "(默认: 取消):" lotserver_num
 	[[ -z "${lotserver_num}" ]] && echo "已取消..." && exit 1
@@ -1582,7 +1582,7 @@ Uninstall_LotServer(){
 # BBR
 Configure_BBR(){
 	echo && echo -e "  你要做什么？
-	
+
  ${Green_font_prefix}1.${Font_color_suffix} 安装 BBR
 ————————
  ${Green_font_prefix}2.${Font_color_suffix} 启动 BBR
@@ -1626,7 +1626,7 @@ Status_BBR(){
 # 其他功能
 Other_functions(){
 	echo && echo -e "  你要做什么？
-	
+
   ${Green_font_prefix}1.${Font_color_suffix} 配置 BBR
   ${Green_font_prefix}2.${Font_color_suffix} 配置 锐速(ServerSpeeder)
   ${Green_font_prefix}3.${Font_color_suffix} 配置 LotServer(锐速母公司)
