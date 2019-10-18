@@ -1,5 +1,5 @@
 #!/bin/bash
- 将ocpath替换为自己的网站文件夹位置
+#将ocpath替换为自己的网站文件夹位置
 ocpath='/home/wwwroot/cloud' #1
 htuser='www-data'
 htgroup='www-data'
